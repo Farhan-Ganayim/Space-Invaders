@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body onload="init()" onkeyup="onKeyDown(event)">
+    <div class="game-data">
+        <span class="title-score title" >Score: </span><span class="score data">0</span>
+        <span class="title-aliens title">Aliens: </span><span class="aliens data">24</span>
+
+    </div>
+    <div class="game-container">
+
+        <table>
+            <tbody class="board"></tbody>
+        </table>
+
+
+    </div>
+    <script src="js/util.js"></script>
+    <script src="js/hero.js"></script>
+    <script src="js/aliens.js"></script>
+    <script src="js/game.js"></script>
+
+</body>
+
+</html>
