@@ -118,7 +118,7 @@ function moveAliens() {
         // renderBoard(gBoard)
 
 
-    }, 100)
+    }, ALIEN_SPEED)
 }
 
 /*---------------------*/
