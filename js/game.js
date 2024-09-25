@@ -20,22 +20,42 @@ var gGame = {
 }
 
 /*---------------------*/
+function startRestartGame() {
+    var elButton = document.querySelector('.start-restart')
+
+    if (gGame.isOn || gAliensBottomRowIdx + 1 === gHero.pos.i) {
+        clearInterval(gIntervalAliens)
+        init()
+        elButton.innerText = 'Start Game'
+        gGame.isOn = false
+    }
+    else {
+        gGame.isOn = true
+        moveAliens()
+        elButton.innerText = 'Restart Game'
+    }
+
+}
+/*---------------------*/
 function init() {
 
-    gBoard = createBoard()
 
-    // shiftBoardRight(gBoard,0,2)
-    // shiftBoardRight(gBoard,0,2)
-    // shiftBoardLeft(gBoard,0,2)
-    // shiftBoardDown(gBoard,0,2)
-    // shiftBoardDown(gBoard,1,3)
+    clearInterval(gIntervalAliens)
+    document.querySelector('.game-over-modal').style.display = 'none'
+    var elButtonRestart = document.querySelector('.start-restart')
+    elButtonRestart.innerText = 'Start Game'
+    gBoard = createBoard()
     renderBoard(gBoard)
-    gGame.isOn = true
-    gGame.alienCount = 24
+    // gGame.isOn = true
     gAliensTopRowIdx = 0
     gAliensBottomRowIdx = 2
+    gGame.alienCount = 24
+    document.querySelector('.score').innerText = 0
+    document.querySelector('.aliens').innerText = 24
     gIsAlienFreeze = false
-    moveAliens()
+    // gGame.isOn=false
+    // moveAliens()
+
 }
 
 /*---------------------*/
@@ -62,7 +82,7 @@ function renderBoard(board) {
         strHTML += '<tr>'
         for (var j = 0; j < board[i].length; j++) {
             var currCell = board[i][j]
-            var className = currCell.type // Optional, for styling
+            var className = currCell.type
             strHTML += `<td data-i="${i}" data-j="${j}" class="${className}">`
             strHTML += currCell.gameObject || ''
             strHTML += '</td>'
@@ -102,20 +122,24 @@ function updateScore() {
 }
 
 /*---------------------*/
-function showVictoryModal() {
-    clearInterval(gIntervalAliens)
-    clearInterval(laserInterval)
-    gGame.isOn = false
-    console.log('You Win')
+function gameOverModal() {
+    // clearInterval(gIntervalAliens)
+    // clearInterval(laserInterval)
+    // gGame.isOn = false
+    // console.log('You Win')
+
+    var elModal = document.querySelector('.game-over-modal')
+    elModal.querySelector('h3').innerText = (gGame.alienCount === 0) ? 'Great You Win' : 'Game Over'
+    elModal.style.display = 'block'
 }
 
 /*---------------------*/
-function gameOver() {
-    clearInterval(gIntervalAliens)
-    clearInterval(laserInterval)
-    gGame.isOn = false
+// function gameOver() {
+//     clearInterval(gIntervalAliens)
+//     clearInterval(laserInterval)
+//     gGame.isOn = false
 
-}
+// }
 
 
 

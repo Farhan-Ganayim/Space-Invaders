@@ -23,17 +23,14 @@ function createAliens(board) {
 }
 /*-----------------*/
 function handleAlienHit(pos) {
-    // gIsAlienFreeze=true
 
-    // if (!gGame.isOn) return
+    clearInterval(laserInterval)
     updateCell(pos, null)
     gGame.alienCount--
-    // gHero.isShoot = false
-    // clearInterval(laserInterval)
     updateScore()
-    // renderBoard(gBoard)
-    
+    gHero.isShoot = false
 }
+
 /*-----------------*/
 function shiftBoardRight(board, fromI, toI) {
 
@@ -87,19 +84,15 @@ function shiftBoardDown(board, fromI, toI) {
 function moveAliens() {
 
     if (!gGame.isOn) return
+    if (gIsAlienFreeze) return
     var isMovingRight = true
     gIntervalAliens = setInterval(() => {
         if (gIsAlienFreeze) return
         if (isMovingRight) {
             shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             if (checkRightEdge()) {
-                // gIsAlienFreeze = true
-                // setTimeout(()=>{
-                //     console.log('edge')
-                // },500)
-
                 isMovingRight = false
-                shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx) /*shifts down one cell before edge, check!!!*/
+                shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             }
         } else {
             shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
@@ -109,21 +102,23 @@ function moveAliens() {
             }
         }
         if (gAliensBottomRowIdx + 1 === gHero.pos.i) {
+            // gameOverModal()
+            gGame.isOn = false
             clearInterval(gIntervalAliens)
-            clearInterval(laserInterval)
-            gameOver()
+            // clearInterval(laserInterval)
+            gameOverModal()
         }
         if (!gGame.alienCount) {
 
 
             // clearInterval(gIntervalAliens)
-            showVictoryModal()
-            renderBoard(gBoard)
+            gameOverModal()
+            // renderBoard(gBoard)
         }
-        renderBoard(gBoard)
+        // renderBoard(gBoard)
 
 
-    }, 2000)
+    }, 100)
 }
 
 /*---------------------*/
@@ -144,6 +139,23 @@ function checkLeftEdge() {
     return false
 }
 /*---------------------*/
+
+function freezeAliens() {
+    gIsAlienFreeze = true
+    setTimeout(() => {
+        gIsAlienFreeze = false
+    }, 400)
+}
+/*-----------------*/
+function checkBottomRow() {
+
+    for (var j = 0; j < BOARD_SIZE; j++) {
+        if (gBoard[gAliensBottomRowIdx][j].gameObject === ALIEN) {
+            return
+        }
+    }
+    gAliensBottomRowIdx--
+}
 
 
 

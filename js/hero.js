@@ -1,6 +1,6 @@
 'use strict'
 
-const LASER_SPEED = 100
+var LASER_SPEED = 80
 var laserInterval
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false }
 const HERO = '<img src="imgs/space-ship.png" style="width: 35px; height: 35px;"/>'
@@ -23,13 +23,18 @@ function onKeyDown(ev) {
             moveHero(1)
             break
         case ' ':
+            ev.preventDefault() /* So that hitting Space doesn't click Restart button*/ 
             shoot()
+            break
+        case 'x':
+            superMode()
             break
     }
 
 }
 // Move the hero right (1) or left (-1) 
 function moveHero(dir) {
+    if (!gGame.isOn) return
 
     const nextPos = {
         i: gHero.pos.i,
@@ -51,7 +56,7 @@ function moveHero(dir) {
 // Sets an interval for shutting (blinking) the laser up towards aliens 
 function shoot() {
 
-    if (gHero.isShoot) return
+    if (gHero.isShoot || !gGame.isOn) return
     gHero.isShoot = true
     var laserPos = {
         i: gHero.pos.i,
@@ -59,39 +64,50 @@ function shoot() {
     }
     console.log(laserPos)
     laserInterval = setInterval(() => {
-        // var prevLaserPos = { i: laserPos.i, j: laserPos.j }
         laserPos.i--
         if (laserPos.i < 0) {
             clearInterval(laserInterval)
             gHero.isShoot = false
             return
-            // updateCell(laserPos, null)
-            // return
         }
-        
+
         if (gBoard[laserPos.i][laserPos.j].gameObject === ALIEN) {
-
-            // updateCell(laserPos, null)
+            // clearInterval(laserInterval)
+            // gIsAlienFreeze=true
             handleAlienHit(laserPos)
-            clearInterval(laserInterval)
-            gHero.isShoot = false
-
             if (gGame.alienCount === 0) {
-                showVictoryModal()
-                
+                gameOverModal()
             }
+            checkBottomRow()
         }
-
         blinkLaser(laserPos)
     }, LASER_SPEED)
 }
-// renders a LASER at specific cell for short time and removes it 
+
+/*-----------------*/
 function blinkLaser(pos) {
 
-    updateCell(pos, LASER)
+    var elCell = getElCell(pos)
+    elCell.innerHTML = LASER
     setTimeout(() => {
-        updateCell(pos, null)
+        elCell.innerText = ''
     }, 80)
 }
+// function blinkLaser(pos) {
+//     updateCell(pos,LASER)
+//     setInterval(()=>{
+//         updateCell(pos,'')
+//     },laserInterval)
+// }
+/*-------------------*/
+function superMode(){
+
+
+
+
+}
+
+
+
 
 

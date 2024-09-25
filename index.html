@@ -10,16 +10,22 @@
 
 <body onload="init()" onkeyup="onKeyDown(event)">
     <div class="game-data">
-        <span class="title-score title">Score: </span><span class="score data">0</span>
-        <span class="title-aliens title">Aliens: </span><span class="aliens data">24</span>
-
+        <button onclick="startRestartGame()" class="start-restart">Start Game</button>
+        <span class="title-score title">Score: </span><span class="score data"></span>
+        <span class="title-aliens title">Aliens: </span><span class="aliens data"></span>
     </div>
     <div class="game-container">
 
         <table>
-            <tbody class="board"></tbody>
+            <tbody class="board">
+
+            </tbody>
         </table>
 
+        <div class="game-over-modal">
+            <h3 class="modal-msg"></h3>
+            <button class="play-again" onclick="init()">Play Again!</button>
+        </div>
 
     </div>
     <script src="js/util.js"></script>
