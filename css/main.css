@@ -1,5 +1,4 @@
 body {
-
     display: flex;
     justify-content: center;
     margin-top: 90px;
@@ -11,18 +10,17 @@ body {
     padding: 15px;
     background-color: #4c4d48;
     border-radius: 8px;
-    /* margin: auto; */
 }
 
 table {
+
     width: 100%;
     border-collapse: collapse;
 }
 
 td {
-
     width: 40px;
-    height: 45px;
+    height: 40px;
     font-size: 25px;
     text-align: center;
     vertical-align: middle;
@@ -37,10 +35,10 @@ td {
 }
 
 .game-data {
+
     position: absolute;
     align-items: center;
     top: 40px;
-
 }
 
 .data {
@@ -56,7 +54,6 @@ span {
 }
 
 tbody {
-
     align-items: center
 }
 
@@ -72,19 +69,17 @@ tbody {
     border-radius: 10px;
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
 }
 
 .play-again {
     border-radius: 15px;
     background-color: #ced847;
-
     padding: 7px;
     cursor: pointer;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.start-restart{
+.start-restart {
     margin-right: 60px;
     padding: 7px;
     background-color: #ced847;
@@ -92,8 +87,9 @@ tbody {
     font-size: large;
     cursor: pointer;
     border-radius: 10px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }
+
 button:hover {
     background-color: #5b9968;
 }

@@ -1,17 +1,12 @@
 'use strict'
 
-const ALIEN_SPEED = 500
+const ALIEN_SPEED = 1000
 var gIntervalAliens
-
-// The following two variables represent the part of the matrix (some rows) 
-// that we should shift (left, right, and bottom) 
-// We need to update those when: 
-// (1) shifting down and (2) last alien was cleared from row 
 var gAliensTopRowIdx
 var gAliensBottomRowIdx
 var gIsAlienFreeze = false
-// shiftBoardRight(gBoard,0,2)
 
+/*--------------------*/
 function createAliens(board) {
 
     for (var i = 0; i < ALIEN_ROW_COUNT; i++) {
@@ -21,6 +16,7 @@ function createAliens(board) {
         }
     }
 }
+
 /*-----------------*/
 function handleAlienHit(pos) {
 
@@ -45,6 +41,7 @@ function shiftBoardRight(board, fromI, toI) {
     }
     renderBoard(gBoard)
 }
+
 /*-----------------*/
 function shiftBoardLeft(board, fromI, toI) {
     for (var i = fromI; i <= toI; i++) {
@@ -58,6 +55,7 @@ function shiftBoardLeft(board, fromI, toI) {
     }
     renderBoard(gBoard)
 }
+
 /*-----------------*/
 function shiftBoardDown(board, fromI, toI) {
 
@@ -76,10 +74,6 @@ function shiftBoardDown(board, fromI, toI) {
 
 }
 
-/*-----------------*/
-// runs the interval for moving aliens side to side and down 
-// it re-renders the board every time 
-// when the aliens are reaching the hero row - interval stops 
 /*-----------------*/
 function moveAliens() {
 
@@ -102,21 +96,14 @@ function moveAliens() {
             }
         }
         if (gAliensBottomRowIdx + 1 === gHero.pos.i) {
-            // gameOverModal()
             gGame.isOn = false
             clearInterval(gIntervalAliens)
-            // clearInterval(laserInterval)
             gameOverModal()
         }
         if (!gGame.alienCount) {
 
-
-            // clearInterval(gIntervalAliens)
             gameOverModal()
-            // renderBoard(gBoard)
         }
-        // renderBoard(gBoard)
-
 
     }, ALIEN_SPEED)
 }
@@ -138,15 +125,8 @@ function checkLeftEdge() {
     }
     return false
 }
-/*---------------------*/
 
-function freezeAliens() {
-    gIsAlienFreeze = true
-    setTimeout(() => {
-        gIsAlienFreeze = false
-    }, 400)
-}
-/*-----------------*/
+/*---------------------*/
 function checkBottomRow() {
 
     for (var j = 0; j < BOARD_SIZE; j++) {

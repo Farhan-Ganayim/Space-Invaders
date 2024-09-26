@@ -3,16 +3,17 @@
 const BOARD_SIZE = 14
 const ALIEN_ROW_LENGTH = 8
 const ALIEN_ROW_COUNT = 3
-var gAlienDirection = 1;
+var gAlienDirection = 1
 
+const ALIEN = 'ALIEN'
+const ALIEN1 = '<img src="imgs/alien1.png" style="width: 35px; height: 35px;"/>'
+const ALIEN2 = '<img src="imgs/alien3.png" style="width: 35px; height: 35px;"/>'
+const ALIEN3 = '<img src="imgs/alien2.png" style="width: 35px; height: 35px;"/>'
 
-const ALIEN = '👽'
 const LASER = '❗'
-
+const SUPER_LAZER = '🧲'
 const SKY = ' '
 const GROUND = 'GROUND'
-
-// Matrix of cell objects. e.g.: {type: SKY, gameObject: ALIEN} 
 var gBoard
 var gGame = {
     isOn: false,
@@ -21,8 +22,8 @@ var gGame = {
 
 /*---------------------*/
 function startRestartGame() {
-    var elButton = document.querySelector('.start-restart')
 
+    var elButton = document.querySelector('.start-restart')
     if (gGame.isOn || gAliensBottomRowIdx + 1 === gHero.pos.i) {
         clearInterval(gIntervalAliens)
         init()
@@ -34,28 +35,27 @@ function startRestartGame() {
         moveAliens()
         elButton.innerText = 'Restart Game'
     }
-
 }
+
 /*---------------------*/
 function init() {
-
 
     clearInterval(gIntervalAliens)
     document.querySelector('.game-over-modal').style.display = 'none'
     var elButtonRestart = document.querySelector('.start-restart')
     elButtonRestart.innerText = 'Start Game'
-    gBoard = createBoard()
-    renderBoard(gBoard)
-    // gGame.isOn = true
     gAliensTopRowIdx = 0
     gAliensBottomRowIdx = 2
+    gSuperAttacks = 3
+    isSuperAttack = false
+    isNegsShot = false
+    gBoard = createBoard()
+    renderBoard(gBoard)
     gGame.alienCount = 24
     document.querySelector('.score').innerText = 0
     document.querySelector('.aliens').innerText = 24
-    gIsAlienFreeze = false
-    // gGame.isOn=false
-    // moveAliens()
-
+    document.querySelector('.super').innerText = 3
+    // gIsAlienFreeze = false    
 }
 
 /*---------------------*/
@@ -76,7 +76,6 @@ function createBoard() {
 
 /*---------------------*/
 function renderBoard(board) {
-
     var strHTML = ''
     for (var i = 0; i < board.length; i++) {
         strHTML += '<tr>'
@@ -84,7 +83,17 @@ function renderBoard(board) {
             var currCell = board[i][j]
             var className = currCell.type
             strHTML += `<td data-i="${i}" data-j="${j}" class="${className}">`
-            strHTML += currCell.gameObject || ''
+            if (currCell.gameObject === 'ALIEN') {
+                if (i === gAliensTopRowIdx) {
+                    strHTML += ALIEN1
+                } else if (i === gAliensTopRowIdx + 1) {
+                    strHTML += ALIEN2
+                } else {
+                    strHTML += ALIEN3
+                }
+            } else {
+                strHTML += currCell.gameObject || ''
+            }
             strHTML += '</td>'
         }
         strHTML += '</tr>'
@@ -114,32 +123,18 @@ function updateScore() {
 
     var elScore = document.querySelector('.score')
     elScore.innerText = +elScore.innerText + 10
-
     var elAliens = document.querySelector('.aliens')
-    // elAliens.innerText = +elAliens.innerText - 1
     elAliens.innerText = gGame.alienCount
-
 }
 
 /*---------------------*/
 function gameOverModal() {
-    // clearInterval(gIntervalAliens)
-    // clearInterval(laserInterval)
-    // gGame.isOn = false
-    // console.log('You Win')
-
+    clearInterval(gIntervalAliens)
     var elModal = document.querySelector('.game-over-modal')
     elModal.querySelector('h3').innerText = (gGame.alienCount === 0) ? 'Great You Win' : 'Game Over'
     elModal.style.display = 'block'
 }
 
-/*---------------------*/
-// function gameOver() {
-//     clearInterval(gIntervalAliens)
-//     clearInterval(laserInterval)
-//     gGame.isOn = false
-
-// }
 
 
 
