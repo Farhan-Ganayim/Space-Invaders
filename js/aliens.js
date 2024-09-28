@@ -83,16 +83,18 @@ function moveAliens() {
     gIntervalAliens = setInterval(() => {
         if (gIsAlienFreeze) return
         if (isMovingRight) {
-            shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             if (checkRightEdge()) {
                 isMovingRight = false
                 shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+            } else {
+                shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             }
         } else {
-            shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             if (checkLeftEdge()) {
                 shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
                 isMovingRight = true
+            } else {
+                shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
             }
         }
         if (gAliensBottomRowIdx + 1 === gHero.pos.i) {
@@ -101,12 +103,43 @@ function moveAliens() {
             gameOverModal()
         }
         if (!gGame.alienCount) {
-
             gameOverModal()
         }
-
     }, ALIEN_SPEED)
 }
+/*----------------*/
+// function moveAliens() {
+
+//     if (!gGame.isOn) return
+//     if (gIsAlienFreeze) return
+//     var isMovingRight = true
+//     gIntervalAliens = setInterval(() => {
+//         if (gIsAlienFreeze) return
+//         if (isMovingRight) {
+//             shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+//             if (checkRightEdge()) {
+//                 isMovingRight = false
+//                 shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+//             }
+//         } else {
+//             shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+//             if (checkLeftEdge()) {
+//                 shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+//                 isMovingRight = true
+//             }
+//         }
+//         if (gAliensBottomRowIdx + 1 === gHero.pos.i) {
+//             gGame.isOn = false
+//             clearInterval(gIntervalAliens)
+//             gameOverModal()
+//         }
+//         if (!gGame.alienCount) {
+
+//             gameOverModal()
+//         }
+
+//     }, ALIEN_SPEED)
+// }
 
 /*---------------------*/
 function checkRightEdge() {
